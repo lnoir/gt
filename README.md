@@ -93,7 +93,7 @@ GT supports two main commands:
 - `search`: Performs a broader search (default when using tab completion)
 - `immediate`: Searches only in the immediate vicinity (used when directly calling `gt`)
 
-These commands are used internally and don't need to be called directly by the user.
+These commands are used internally and are only added here for reference. You don't need to call them directly.
 
 ## Troubleshooting
 
