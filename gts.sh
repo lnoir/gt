@@ -1,9 +1,7 @@
 #!/bin/bash
 
-### THIS ONE WORKS!!!
-
 # Debug toggle
-GT_DEBUG=1
+GT_DEBUG=0
 
 # Debug function
 gt_debug() {
@@ -23,11 +21,11 @@ gt() {
     local matches
 
     if [[ "$target" == ../* ]]; then
-        matches=$(gttest immediate "$target")
+        matches=$(gts immediate "$target")
     elif [[ "$target" == /* ]]; then
         matches="$target"
     else
-        matches=$(gttest immediate "../$target")
+        matches=$(gts immediate "../$target")
     fi
 
     if [ -z "$matches" ]; then
@@ -87,11 +85,11 @@ _gt_completion() {
     local matches
 
     if [[ -z "$cur" ]]; then
-        gt_debug "Calling gttest immediate with empty string"
-        matches=$(gttest immediate "" 2>/dev/null)
+        gt_debug "Calling gts immediate with empty string"
+        matches=$(gts immediate "" 2>/dev/null)
     else
-        gt_debug "Calling gttest search with '$cur'"
-        matches=$(gttest search "$cur" 2>/dev/null)
+        gt_debug "Calling gt search with '$cur'"
+        matches=$(gts search "$cur" 2>/dev/null)
     fi
 
     gt_debug "Raw matches: $matches"
@@ -135,5 +133,3 @@ if [ -n "$ZSH_VERSION" ]; then
     zstyle ':completion:*' insert-tab false
     bindkey '^I' menu-complete
 fi
-
-### THIS ONE WORKS!!!
