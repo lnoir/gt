@@ -78,13 +78,19 @@ This will show a list of directories containing "doc" in their name.
 
 ### Searching Up the Directory Tree
 
-To search in parent directories, use the `../` prefix:
+To search in parent directories, use the `../` prefix, or `^` suffix:
 
 ```
 gt ../project
 ```
 
-This will search for directories named "project" in the current and parent directories.
+Or:
+
+```
+gt project^
+```
+
+Both will search for directories named "project" in the parent directories.
 
 ## Commands
 

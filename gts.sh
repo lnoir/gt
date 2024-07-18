@@ -18,10 +18,27 @@ gt() {
     fi
 
     local target="$1"
+    local search_type="immediate"
+
+    # Check for '^' suffix
+    if [[ "$target" == *\^ ]]; then
+        target="${target%\^}"  # Remove '^'
+        # Strip any number of leading "../" occurrences
+        target="${target#"${target%%[!../]*}"}"
+        # Add a single "../" prefix
+        target="../$target"
+        search_type="search"
+    fi
+
+    # Check for '../' prefix
+    if [[ "$target" == ../* ]]; then
+        search_type="search"
+    fi
+
     local matches
 
-    if [[ "$target" == ../* ]]; then
-        matches=$(gts immediate "$target")
+    if [[ "$search_type" == "search" ]]; then
+        matches=$(gts search "$target")
     elif [[ "$target" == /* ]]; then
         matches="$target"
     else
@@ -81,6 +98,18 @@ _gt_completion() {
     fi
 
     gt_debug "Captured current word: '$cur'"
+
+    # Handle '^' suffix for upward search
+    if [[ "$cur" == *\^ ]]; then
+        gt_debug "Matched '^' suffix"
+        cur="${cur%^}"  # Remove '^'
+        # Strip any number of leading "../" occurrences
+        cur="${cur#"${cur%%[!../]*}"}"
+        cur="../$cur"
+        gt_debug "Modified current word: '$cur'"
+    else
+        gt_debug "No '^' suffix detected"
+    fi
 
     local matches
 
